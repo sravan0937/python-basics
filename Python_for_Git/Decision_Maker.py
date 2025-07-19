@@ -95,7 +95,10 @@ class DecisionApp:
             self.output_box.insert(tk.END, "🪫 No vibe detected.\nTry using more real-world words like: job, love, money, risk, etc.\n")
             self.output_box.insert(tk.END, "\n📌 Tip: Be honest. The app reacts to your intent, not formality.")
 
-# Run app
+        self.input_box.delete("1.0", tk.END)
+        self.output_box.see(tk.END)
+
+# Run the app
 root = tk.Tk()
 app = DecisionApp(root)
 root.mainloop()
