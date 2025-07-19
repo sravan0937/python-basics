@@ -1,4 +1,6 @@
-# Themes with keyword groups
+import tkinter as tk
+
+# Logic setup
 themes = {
     "money": ["money", "salary", "investment", "profit", "gain"],
     "love": ["love", "crush", "relationship", "feelings"],
@@ -8,7 +10,6 @@ themes = {
     "safety": ["safe", "secure", "stable"]
 }
 
-# Responses per theme
 responses = {
     "money": "Sounds profitable. Make sure you evaluate returns.",
     "love": "Matters of the heart? Don’t rush. Feelings > logic.",
@@ -18,21 +19,34 @@ responses = {
     "safety": "If it feels safe, it probably is. Trust that."
 }
 
-# Input
-situation = input("Tell me your situation: ").lower()
+# Function to process input
+def decide():
+    text = input_box.get("1.0", tk.END).lower()
+    matched = []
+    for theme, words in themes.items():
+        for w in words:
+            if w in text:
+                matched.append(theme)
+                break
+    output_box.delete("1.0", tk.END)
+    if matched:
+        output_box.insert(tk.END, "Logic triggered based on: " + ", ".join(matched) + "\n\n")
+        for m in matched:
+            output_box.insert(tk.END, "- " + responses[m] + "\n")
+    else:
+        output_box.insert(tk.END, "No clear direction. Rephrase or add detail.")
 
-# Check for theme matches
-matched = []
-for theme, words in themes.items():
-    for w in words:
-        if w in situation:
-            matched.append(theme)
-            break  # avoid double count
+# GUI Setup
+window = tk.Tk()
+window.title("Decision-Maker 1.0")
 
-# Final response
-if matched:
-    print("Decision logic triggered based on:", ", ".join(matched))
-    for m in matched:
-        print("-", responses[m])
-else:
-    print("No clear direction. Try rephrasing or give more detail.")
+input_box = tk.Text(window, height=5, width=50)
+input_box.pack(pady=10)
+
+submit_button = tk.Button(window, text="Get Decision", command=decide)
+submit_button.pack()
+
+output_box = tk.Text(window, height=10, width=50)
+output_box.pack(pady=10)
+
+window.mainloop()
