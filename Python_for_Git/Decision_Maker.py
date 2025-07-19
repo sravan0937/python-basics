@@ -1,33 +1,38 @@
-# Step 1: Get situation
-situation = input("Tell me your situation: ")
-
-# Define keywords and their scores
-keywords = {
-    "money": 2,
-    "love": -1,
-    "risk": -2,
-    "opportunity": 3,
-    "urgent": -1,
-    "safe": 2,
-    "loss": -3,
-    "gain": 3,
-    "confused": -1
+# Themes with keyword groups
+themes = {
+    "money": ["money", "salary", "investment", "profit", "gain"],
+    "love": ["love", "crush", "relationship", "feelings"],
+    "risk": ["risk", "danger", "loss", "gamble"],
+    "opportunity": ["opportunity", "chance", "offer"],
+    "confusion": ["confused", "unsure", "doubt"],
+    "safety": ["safe", "secure", "stable"]
 }
 
-# Analyze situation
-score = 0
-for word in keywords:
-    if word in situation.lower():
-        score += keywords[word]
+# Responses per theme
+responses = {
+    "money": "Sounds profitable. Make sure you evaluate returns.",
+    "love": "Matters of the heart? Don’t rush. Feelings > logic.",
+    "risk": "Risk spotted. Proceed only if reward is worth it.",
+    "opportunity": "Rare chances don’t wait. Go for it.",
+    "confusion": "Clear your head. Don’t decide in confusion.",
+    "safety": "If it feels safe, it probably is. Trust that."
+}
 
-# Give decision
-if score >= 3:
-    decision = "Do it. No regrets."
-elif score >= 1:
-    decision = "Seems fine, but think once."
-elif score == 0:
-    decision = "Too neutral. Need more info."
+# Input
+situation = input("Tell me your situation: ").lower()
+
+# Check for theme matches
+matched = []
+for theme, words in themes.items():
+    for w in words:
+        if w in situation:
+            matched.append(theme)
+            break  # avoid double count
+
+# Final response
+if matched:
+    print("Decision logic triggered based on:", ", ".join(matched))
+    for m in matched:
+        print("-", responses[m])
 else:
-    decision = "Avoid it. Smells like trouble."
-
-print("Decision:", decision)
+    print("No clear direction. Try rephrasing or give more detail.")
