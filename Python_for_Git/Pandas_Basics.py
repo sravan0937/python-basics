@@ -15,7 +15,7 @@ details_df.index=["ID1", "ID2", "ID3"]
 #task 6
 print(details_df.loc["ID2"])
 #task 7
-details_df.to_csv("People.csv", index=False)
+details_df.to_csv("People.csv", index=False) 
 
 
 
